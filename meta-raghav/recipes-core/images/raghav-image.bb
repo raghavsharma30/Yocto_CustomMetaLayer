@@ -17,6 +17,7 @@ IMAGE_INSTALL:append = " \
     wpa-supplicant \
     connman \
     wifi-config \
+    linux-firmware \
 "
 
 # Image features (keywords)
