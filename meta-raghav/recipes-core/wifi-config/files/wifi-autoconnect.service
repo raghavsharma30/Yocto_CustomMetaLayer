@@ -1,6 +1,7 @@
 [Unit]
 Description=Auto-connect to WiFi using wpa_supplicant
-After=network.target
+After=network-pre.target
+Wants=network-pre.target
 
 [Service]
 Type=oneshot
@@ -9,6 +10,8 @@ ExecStartPre=/usr/sbin/rfkill unblock all
 ExecStartPre=/sbin/ip link set wlan0 up
 ExecStart=/usr/sbin/wpa_supplicant -B -i wlan0 -c /etc/wpa_supplicant.conf -D nl80211,wext
 ExecStartPost=/sbin/udhcpc -i wlan0
+ExecStartPost=/bin/sh -c "iw dev wlan0 set power_save off"
+ExecStartPost=/bin/sleep 3
 Restart=on-failure
 
 [Install]
